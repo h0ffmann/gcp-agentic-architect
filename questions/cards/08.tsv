@@ -1,0 +1,5 @@
+Least ops, managed sessions/memory	Agent Runtime
+Existing container pipeline, HTTP service	Cloud Run
+Sidecar / GPU node pool / node network policy	GKE
+Log resource type for Runtime agents	aiplatform.googleapis.com/ReasoningEngine
+Runtime extras beyond hosting	Sessions, Memory Bank, code execution sandbox, Example Store (preview)

@@ -1,0 +1,5 @@
+Data must not leave the VPC, narrow task, low latency	Self-hosted open-weights SLM (Model Garden) on GKE
+Broad reasoning, no ML ops team, fastest to ship	Gemini via SaaS API
+Where to find open-weight models on Google Cloud	Model Garden
+Four axes the guide names for model selection	cost, security, latency/architecture; LLM vs SLM, self-hosted vs SaaS, OSS vs proprietary
+Multi-agent cost pattern	SLM for routers/classifiers, LLM for the planner

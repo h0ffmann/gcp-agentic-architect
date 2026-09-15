@@ -1,0 +1,5 @@
+Independent subtasks, latency matters	ParallelAgent fan-out, then a sequential summary
+Agent ↔ agent protocol	A2A (agent cards + tasks)
+Runtime + Gateway modes	Agent-to-Anywhere (egress) and Client-to-Agent (ingress); Gemini Enterprise egress only
+Cross-project destination rule	register it in the gateway project; Runtime agents, egress mode only
+Products that coordinate multi-agent systems	Agent Identity, Agent Registry, Agent Runtime, agent policies

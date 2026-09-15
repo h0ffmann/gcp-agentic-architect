@@ -1,0 +1,5 @@
+Exam weights 1..5	13 / 17 / 33 / 22 / 15
+Two parts of the certification	Pearson MCQ (3 h) + Google Skills labs (<5 h) unlocked only after passing the MCQ
+Old name → new name: Agent Engine	Agent Runtime
+Old name → new name: Vertex AI Search	Agent Search
+Old name → new name: Vector Search 2.0	Agent Retrieval (Vector Search 1.0 stays a separate, older product)

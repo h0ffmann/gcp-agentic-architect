@@ -1,0 +1,5 @@
+ADK eval command	adk eval <agent_folder> <file>.evalset.json
+Default response_match_score threshold	0.8
+ADK criteria needing a GCP project	safety_v1 and trajectory-quality (Agent Platform Eval SDK)
+adk conformance does…	regression testing against a recorded golden baseline
+Answer quality at scale, no scorer code	Agent Platform Gen AI evaluation service

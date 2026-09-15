@@ -1,0 +1,5 @@
+Every Agent Gateway requires…	an authorization policy; IAP in dry-run first
+Agent never sees end-user credentials because…	auth manager encrypts them; gateway decrypts at egress
+PAB policy does…	bounds the resources a principal can ever access, regardless of roles
+Model Armor floor settings vs templates	project-wide minimum vs per-request configuration
+Model Armor when unreachable	request continues unscreened (fail open)

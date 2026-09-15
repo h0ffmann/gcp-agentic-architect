@@ -1,0 +1,5 @@
+Session vs Memory Bank	session = one conversation's events; memory = distilled facts across sessions, per user
+Memory Bank API flow	CreateSession → AppendEvent → GenerateMemories → fetch memories
+Can you use Sessions without deploying an agent?	yes — create an Agent Runtime instance as the session store
+Agents CLI installs skills where?	~/.agents/skills (visible to Antigravity)
+Agents CLI project files	pyproject.toml + agents-cli-manifest.yaml

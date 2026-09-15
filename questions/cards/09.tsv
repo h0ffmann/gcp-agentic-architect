@@ -1,0 +1,5 @@
+Same tool call repeated many times	reasoning loop → cap iterations, inspect trace
+Which step added latency	Cloud Trace spans per invocation
+Quality slowly degrading in production	drift → continuous evaluation vs golden set
+403 'Egress request is not authorized'	Gateway egress: check agent identity roles + authorization policy
+Google Cloud Observability consists of	Cloud Logging + Cloud Trace (+ Topology on Agent Platform)

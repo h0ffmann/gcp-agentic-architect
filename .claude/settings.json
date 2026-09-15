@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "deny": [
+      "Bash(gcloud run deploy:*)",
+      "Bash(gcloud * create:*)",
+      "Bash(gcloud services enable:*)",
+      "Bash(terraform apply:*)",
+      "Bash(terraform destroy:*)",
+      "Bash(adk deploy:*)",
+      "Bash(agents-cli deploy:*)",
+      "Read(.env)",
+      "Read(.env.*)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [{ "type": "command", "command": "bash .claude/hooks/guard-gcloud.sh" }]
+      }
+    ]
+  },
+  "includeCoAuthoredBy": false,
+  "attribution": { "commit": "", "pr": "" }
+}

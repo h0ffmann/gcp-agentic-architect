@@ -1,0 +1,5 @@
+Agent Retrieval was formerly…	Vector Search 2.0
+Agent Retrieval data model	collections of JSON objects; filter by payload and vector
+Two Agent Retrieval pricing models	usage-based (small) and resource-based (tuned)
+Top-k right but top-3 wrong → fix	add a reranker
+Relevant docs never retrieved → fix	embedding model / chunking / hybrid search, not a reranker

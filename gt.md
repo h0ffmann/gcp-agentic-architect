@@ -1,4 +1,4 @@
-# Prompt series — `agentic-architect-lab` (Google Cloud Professional Agentic Architect, beta)
+# Prompt series — `gcp-agentic-architect` (Google Cloud Professional Agentic Architect, beta)
 
 Not one prompt. Seven sessions, one deliverable each, in the same "one feature, one session"
 discipline marola already enforces (`/clear`, `/rename` to the branch, `just pr`). Prompt 0 is the
@@ -11,9 +11,9 @@ after 0, but the order below is the study order.
   below hard-code those weights. Section 3 (custom agents: ADK, sessions/memory, RAG, MCP, A2A,
   Agent Identity/Registry/Runtime) is a third of the exam and gets a third of the course.
 - **The certification has two components**: a proctored multiple-choice exam (Pearson) **and
-  hands-on labs in Google Skills**. "No cloud" is fine for marola; it is *not* fine for the labs
-  half. Every prompt treats GCP as opt-in for the repo but the plan must budget real lab time
-  (free tier / $300 new-customer credits / Google Skills lab credits).
+  hands-on labs in Google Skills**. Verified 2026-09-15 (FAQ): the labs unlock **only for
+  candidates who pass the MCQ**, by email in late October, window late Oct–Dec, < 5 h. So the
+  15 days are MCQ-only; lab prep is a separate block after results. GCP stays opt-in and gated.
 - **The beta window closes September 30** — your exam day. Beta exams have no official practice
   test and results arrive weeks after the window closes. Plan for that, don't be surprised by it.
 - The in-scope tool list is full of names newer than any model's memory — Antigravity, Agents
@@ -61,7 +61,7 @@ Repos on disk (read before writing anything):
                     (labs/pratico, labs/agentic) and the ai-jail recipes; ww-lab and marola
                     consume it as a flake input. New Nix tooling goes HERE, not in the lab repo.
 
-Target repo: ./agentic-architect-lab (personal, public). Same house rules as marola's AGENTS.md:
+Target repo: ./gcp-agentic-architect (personal, public). Same house rules as marola's AGENTS.md:
 few comments, no attribution banners, Tested:/Cost: trailers, verify-then-claim, no paid cloud
 resource without explicit human go-ahead (adapt guard-azure.sh → guard-gcloud.sh: deny
 `gcloud ... create|deploy`, `terraform apply`, `adk deploy` unless GCP_ALLOW_DEPLOY=1).
@@ -84,7 +84,7 @@ Rules for this session:
 ```text
 [Block A]
 
-TASK: bootstrap ./agentic-architect-lab as a git repo, modelled on ww3-gpu's layout, empty of
+TASK: bootstrap ./gcp-agentic-architect as a git repo, modelled on ww3-gpu's layout, empty of
 course content but with every file the later sessions will fill.
 
 Deliver:
@@ -109,10 +109,12 @@ Deliver:
 5. STUDY-CALENDAR.md — 15 days, full time, in this order and weight:
    D1 orientation + EXAM-BRIEF + AWESOME list (Prompt 1) · D2–3 Section 3a (ADK, LLM selection,
    sessions/memory) · D4–5 Section 3b (RAG, Vector Search, MCP, A2A, multi-agent) · D6 Section 4a
-   (evaluation) · D7 Section 4b (deploy, troubleshoot, observability) + Google Skills labs day ·
-   D8 Section 5 · D9 Section 2 · D10 Section 1 · D11 mock exam 1 + weak-spot review · D12 Google
-   Skills labs day 2 · D13 marola port session (Prompt 4) as active recall · D14 mock exam 2 +
-   flashcards · D15 travel: flashcards only, no new material.
+   (evaluation) · D7 Section 4b (deploy, troubleshoot, observability) + read-only console recon ·
+   D8 Section 5 · D9 Section 2 · D10 Section 1 · D11 mock exam 1 + weak-spot review · D12
+   Sections 3–4 second pass, every ⚠ resolved · D13 marola port session (Prompt 4) as active
+   recall · D14 mock exam 2 + flashcards · D15 travel: flashcards only, no new material.
+   The Google Skills labs are NOT in this window: they unlock only after passing the MCQ
+   (late October) — the calendar gets an "After the MCQ" block for them.
    Each day: reading block, runnable case, 30-question quiz, 20-min spaced-repetition review.
 Acceptance: `nix develop -c just smoke` passes on the empty skeleton; CI green; `git log` has
 one commit with Tested:/Cost: trailers. Do NOT write lesson content in this session.
@@ -309,7 +311,7 @@ TASK: package the lab for its first public push and produce the zip.
    predicted score from `just quiz --stats`.
 4. Push checklist in README: secrets scan (no .env, no tokens, no GCP project ids), LICENSE
    (MIT, matching marola/ww3-gpu), CI green, first release tag `v0.1-beta-exam`.
-5. `just zip` → agentic-architect-lab-<date>.zip of the repo (git-clean tree, no .tmp, no
+5. `just zip` → gcp-agentic-architect-<date>.zip of the repo (git-clean tree, no .tmp, no
    node_modules, no pdf binaries larger than 20 MB) plus the two marola PR bundles from Prompt
    4 (`git bundle`) so the marola side can be pushed separately.
 Acceptance: zip unpacks, `nix develop -c just smoke` green from the unpacked tree, `git log`
@@ -324,13 +326,14 @@ trailers present, nothing in the zip that the secrets scan flags.
 |---|---|---|
 | D1 | Prompt 0 → 5 → 1 → 3 (schema + seed) → 2 (outline only) | skeleton, shell, AWESOME, 150 q, approved outline |
 | D2–D10 | Prompt 2, two lessons per session, Section 3 first | 13 lessons, cases, 260 more questions, flashcards |
-| D7, D12 | no prompts — Google Skills labs in the real console | labs half of the cert |
+| D7 | read-only console recon inside lesson 08 | product recognition, no drills |
+| D12 | targeted `--weak` sessions, resolve every ⚠ | Sections 3–4 second pass |
 | D11, D14 | Prompt 2 lessons 13/14 (`--build-mock`) | two timed mocks |
 | D13 | Prompt 4a then 4b | MIP-0057 + 5 stacked marola PRs |
 | D14–15 | Prompt 6 | book PDFs, zip, first push, tag |
 
-Two things I would change in your original ask, stated once: the course cannot be "no cloud"
-end-to-end because the certification itself has a hands-on-labs component in Google Skills —
-budget two lab days and a credit ceiling; and "use ww3-gpu as a baseline" is about the repo's
+Two things I would change in your original ask, stated once: the certification is not "no
+cloud" end-to-end — its hands-on-labs half runs in Google Skills after you pass the MCQ, so plan
+a lab block and a credit ceiling for late October; and "use ww3-gpu as a baseline" is about the repo's
 *shape* (lessons + runnable cases + verified awesome list + Nix + PDF pipeline), not its content,
 so Prompt 0 copies the skeleton and nothing else.

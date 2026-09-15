@@ -1,0 +1,12 @@
+.tmp/
+.env
+.env.*
+!.env.example
+pdf/
+*.zip
+__pycache__/
+.direnv/
+result
+node_modules/
+.venv/
+questions/cards/bank.tsv

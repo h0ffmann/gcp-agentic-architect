@@ -1,0 +1,5 @@
+Antigravity CLI binary	agy — successor of Gemini CLI
+Runs before a tool executes	a hook
+Standing instruction file Antigravity reads	AGENTS.md / GEMINI.md (rules)
+Skill definition file	SKILL.md in a skill directory (.agents/skills project scope)
+Untrusted PR code must run in…	a sandbox: GKE, Cloud Workstations, Antigravity sandbox

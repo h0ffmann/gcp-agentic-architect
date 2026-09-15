@@ -1,0 +1,5 @@
+MCP is for…	agent ↔ tools/servers
+Agent Registry registers Runtime agents…	automatically; external agents manually
+Agent Identity replaces…	shared service accounts; one attested SPIFFE identity per agent
+Role that cannot be granted to an agent identity	Cloud Storage legacy bucket roles
+Who reads the registry to enforce access	Agent Gateway

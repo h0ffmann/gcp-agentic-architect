@@ -1,0 +1,5 @@
+ADK command that opens the local dev UI	adk web <agents_folder> → localhost:8000
+Three adk deploy targets	docker, cloud_run, agent_engine (Agent Runtime)
+What a Runner produces	a stream of events: user text, function_call, function_response, model text
+ADK is open source and…	model-agnostic, code-first, Python and Java
+Where evalsets can be created without code	the Eval tab of adk web ('Add current session')
