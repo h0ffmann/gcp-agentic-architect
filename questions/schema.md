@@ -12,7 +12,8 @@ if a section lacks unused questions). `cards/NN.tsv` are hand-written lesson fla
  "difficulty": 2, "source_url": "https://…", "verified": "v", "tags": ["memory-bank"]}
 ```
 
-Rules, enforced by `quiz.py --validate` (also run by `scripts/smoke.py`):
+Rules, enforced by `quiz.py --validate` (schema) and its quality lint (both run by
+`scripts/smoke.py`):
 - `section` ∈ 1.1 1.2 2.1 2.2 3.1 3.2 3.3 4.1 4.2 5.1 5.2; `lesson` is the two-digit lesson.
 - `answer` is a key or a list of keys (multi-select); every option has a rationale.
 - `difficulty` 1–3; `verified` is `v` (claim fetched, URL is the source) or `⚠`.
@@ -20,11 +21,31 @@ Rules, enforced by `quiz.py --validate` (also run by `scripts/smoke.py`):
   real products used wrongly. No trivia, nothing copied from paid or dump sites.
 - Ids are `q-<section>-<nnnn>`, unique across all files.
 
+Quality rules the lint enforces, because a bank can pass the schema and still teach the wrong
+habit (all of these were real defects in the first 124-question bank):
+- Stems ≥ 120 characters: a scenario with a constraint, not a definition question.
+- Every rationale ≥ 20 characters — "No" and "Wrong" teach nothing.
+- No "all/none of the above"; multi-select stems must end with `(Choose two.)`.
+- No answer letter on more than 40% of single-answer questions. `quiz.py --rebalance` permutes
+  options so the correct answers spread evenly over A–D; run it after adding a batch.
+- The correct option is the longest (or the shortest) in at most 40% of questions, measured over
+  a bank-sized set — otherwise "pick the longest" scores far above chance. Give distractors the
+  same specificity and length as the answer, and put the explanation in the rationale.
+
+Sessions shuffle the options and map the answer back, so the letter in the file is not the letter
+on screen; `--no-shuffle` keeps file order.
+
 State lives in `.tmp/`: `quiz-history.jsonl` (every answer) and `leitner.json` (box 1–5 per
 question; correct → up a box, wrong → box 1; due after 0/1/3/7/14 days). `--weak` serves due
 questions first, then unseen, then the rest by box. `--stats` weights the latest answer per
 question by section into a predicted score and names the three weakest objectives.
 
-Seed status (2026-09-15): 40 questions, 12 `(v)` from Agent Platform docs, 28 `⚠` written
-from the guide's bullets. Target before D11: 300+ in the bank, so both 60-question mocks can be
-built disjoint. Each lesson (Prompt 2) appends 20.
+Status (2026-09-15): **316 questions**, rewritten from the 124-question seed bank at exam level —
+scenario stems (median 221 characters), four plausible options with a rationale each, 223 `(v)`
+against docs fetched that day and 93 `⚠` written from the guide's bullets; difficulty 2–3 for 312
+of them. Shares track the exam weights: 1.1 22 · 1.2 21 · 2.1 30 · 2.2 25 · 3.1 38 · 3.2 38 ·
+3.3 29 · 4.1 35 · 4.2 32 · 5.1 25 · 5.2 21.
+
+`mock-1.jsonl` and `mock-2.jsonl` are built (60 each, weighted 8/10/20/13/9, disjoint):
+`just quiz --build-mock 1`, `--build-mock 2 --seed 13`. Rebuilding them after adding questions is
+fine; they are regenerated from the bank.

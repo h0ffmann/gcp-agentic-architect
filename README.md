@@ -42,7 +42,7 @@ Everything before Sept 30 is Part 1. Lab prep is a separate block after results.
 |---|---|
 | [`course/`](course/) | 15 lessons, Section 3 first: model selection, ADK, sessions & memory, RAG, MCP, A2A, evaluation, deployment, troubleshooting, security, coding agents, low-code, two mock-exam procedures |
 | [`cases/`](cases/) | 12 runnable cases, one per lesson, stdlib Python, one command and one assertion each |
-| [`questions/`](questions/) | `bank.jsonl` (124 scenario questions, rationale per option), Anki decks in `cards/`, [`schema.md`](questions/schema.md) |
+| [`questions/`](questions/) | `bank.jsonl` (316 scenario questions, rationale per option), two built 60-question mocks, Anki decks in `cards/`, [`schema.md`](questions/schema.md) |
 | [`scripts/`](scripts/) | `quiz.py` (Leitner boxes, weighted predicted score), `awesome_digest.py`, `smoke.py`, the book pipeline, `pr.sh` / `uprd.sh` |
 | [`AWESOME-AGENTIC-ARCHITECT_202609.md`](AWESOME-AGENTIC-ARCHITECT_202609.md) | Curated, dated links; every entry fetched |
 | [`EXAM-BRIEF.md`](EXAM-BRIEF.md) · [`STUDY-CALENDAR.md`](STUDY-CALENDAR.md) · [`STUDY-LOG.md`](STUDY-LOG.md) | The guide as a checklist + cost plan · 15 days to the MCQ · one line per day |
@@ -63,6 +63,7 @@ just                   # list recipes
 just smoke             # layout + question banks + self-tests + gcloud guard + all 12 cases (~2 s)
 just case 04           # one lesson's case: RAG, top-k then rerank
 just quiz --lesson 04  # 20 questions; also --section 3, --mock 1 --minutes 120, --weak, --stats
+just quiz --stats      # accuracy per objective, weighted predicted score, weakest three
 ```
 
 Then start at [`course/00-orientation.md`](course/00-orientation.md). No Google Cloud account is
@@ -172,7 +173,7 @@ commits `pdf/agentic-architect-book.pdf` back to `main`. PT generation is not wi
 |---|---|
 | AWESOME list | done; Google Skills path activities need a login to enumerate |
 | Course | 15 lessons, 12 cases, 13 flashcard decks (65 cards); lessons 13/14 are the mock procedure |
-| Questions | runner done; bank at 124 — needs ~300 for two disjoint 60-question mocks (+20 per lesson while studying) |
+| Questions | bank at **316**, exam-level scenarios; both 60-question mocks built and disjoint. Options are shuffled per session and `--validate` lints stems, rationales, answer-letter balance and option-length tells |
 | marola | MIP draft + mapping doc in `marola/`. marola merged its own MIP-0057 (GCP as opt-in cloud backend, [#385](https://github.com/h0ffmann/marola/pull/385)) on 2026-09-15, so this draft takes the next free number or folds into it when upstreamed |
 | Toolchain | `flake.nix` on nix-config `labs/{lint,agentic,publisher}`, locked; `nix flake check`, `just quality` and `nix build .#book` run green locally |
 | Publications | EN book builds (35 pages); PT generation open |
