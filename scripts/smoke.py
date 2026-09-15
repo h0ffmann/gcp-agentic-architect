@@ -11,10 +11,11 @@ import sys
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 
 REQUIRED = [
-    "AGENTS.md", "README.md", "EXAM-BRIEF.md", "STUDY-CALENDAR.md", "STUDY-LOG.md", "gt.md",
-    "justfile", "flake.nix", ".github/workflows/ci.yml",
+    "AGENTS.md", "README.md", "DESCRIPTION.md", "CONTRIBUTING.md", "LICENSE",
+    "EXAM-BRIEF.md", "STUDY-CALENDAR.md", "STUDY-LOG.md", "docs/PROMPT-SERIES_202609.md",
+    "justfile", "flake.nix", "flake.lock", ".ai-jail", ".github/workflows/ci.yml", ".github/workflows/pubs.yml",
     ".claude/settings.json", ".claude/hooks/guard-gcloud.sh",
-    "course", "cases", "questions", "scripts", "marola", "publications",
+    "course", "cases", "questions", "scripts", "marola", "publications/book/defaults.yaml",
 ]
 LESSONS = 15
 SECTIONS = {"1.1", "1.2", "2.1", "2.2", "3.1", "3.2", "3.3", "4.1", "4.2", "5.1", "5.2"}

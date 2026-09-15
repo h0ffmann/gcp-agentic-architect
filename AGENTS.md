@@ -11,11 +11,12 @@ scenario-style question bank with a spaced-repetition runner, a verified awesome
 design docs for porting what the exam teaches into [marola](https://github.com/h0ffmann/marola)
 without breaking its no-cloud default. Shape copied from
 [ww3-gpu](https://github.com/h0ffmann/ww3-gpu) (lessons + cases + AWESOME list + Nix + PDF
-pipeline); Nix tooling lives in [nix-config](https://github.com/h0ffmann/nix-config), not here.
+pipeline); shared Nix tooling (lint, ai-jail, the PDF toolchain) comes from
+[nix-config](https://github.com/h0ffmann/nix-config)'s labs as flake inputs.
 
-The only file at bootstrap is `gt.md` — the seven-session prompt series that builds everything
-else. It is the plan of record; when this file and `gt.md` disagree, fix the one that is wrong in
-the same change.
+The only file at bootstrap was `docs/PROMPT-SERIES_202609.md` (formerly `gt.md`) — the
+seven-session prompt series that builds everything else. It is the plan of record; when this
+file and it disagree, fix the one that is wrong in the same change.
 
 ## The exam, as verified on 2026-09-15 (dates matter — recheck if you are reading this later)
 
@@ -68,26 +69,29 @@ Never hardcode a key, token, or project id; `.env` is gitignored and masked unde
 ## Setup & commands
 
 ```bash
-nix develop            # devShell from nix-config's labs/agentic-architect (python, uv, ADK,
-                       # ollama, just, pandoc + md→PDF, gcloud, node for MCP servers, shellcheck)
+nix develop            # python, uv, gcloud, ollama, node + nix-config labs/lint and labs/agentic
 just                   # list recipes
-just smoke             # the CI check, locally: flake eval + scripts self-tests + one PDF
+just smoke             # stdlib gate: layout, banks, scripts --self-test, gcloud guard, all cases
+just quality           # ruff, shellcheck, actionlint, nixpkgs-fmt/statix/deadnix, just --fmt, self-tests
+just check             # nix flake check (checks.smoke builds in the sandbox)
 just case NN           # run lesson NN's case; prints expected output and the assertion
 just quiz --lesson NN  # 20-question session; --section 3, --mock 1 --minutes 120, --weak, --stats
-just pdf               # build publications/ (EN source, PT generated) into pdf/
-just quality           # shellcheck, ruff, nixpkgs-fmt --check, justfile parse, scripts --self-test
-just toolchain         # exact versions, for the book's methods section
-just jail-claude       # Claude Code inside ai-jail (jcf/jcs pinned models), token from host gh
+just book              # course/ -> build/agentic-architect-book.pdf (labs/publisher); book-nix = sandbox
+just toolchain         # exact versions + nixpkgs rev, for the book's methods section
+just jco               # Claude Code inside ai-jail (jcf fable, jcs sonnet), token from host gh
+just pr                # push the branch, open/refresh its PR from the commits (uprd = body only)
 ```
 
-`just smoke && just quality` green before a change is done. Scripts are stdlib-only Python with
+`just smoke && just quality` green before a change is done (CI runs `just quality` in
+`nix develop .#lint`). Scripts are stdlib-only Python with
 `--self-test` and `--json`, cached under `.tmp/`, and never edit a curated document themselves
 (the digest proposes, the human curates — MIP-0041/0043 pattern).
 
 ## Layout
 
 ```
-gt.md                 the prompt series that builds this repo (plan of record)
+docs/PROMPT-SERIES_202609.md   the prompt series that builds this repo (plan of record)
+DESCRIPTION.md        one-paragraph project description (GitHub / LinkedIn)
 EXAM-BRIEF.md         exam guide as a checklist + in-scope tools, one verified line each + cost plan
 STUDY-CALENDAR.md     15 days to the MCQ, weighted 13/17/33/22/15; lab block after results
 STUDY-LOG.md          one line per day: hours, quiz score, predicted score
@@ -96,12 +100,16 @@ course/NN-*.md        lessons; fixed skeleton: On the exam · Read · Verified t
                       marola port · Quiz · Flashcards
 cases/NN-*/           one runnable local case per lesson, one command, one assertion
 questions/            bank.jsonl, mock-N.jsonl, cards/ (Anki TSV), schema.md
-scripts/              quiz.py, awesome_digest.py, … (stdlib, --self-test)
+scripts/              quiz.py, awesome_digest.py, smoke.py, book_prep.py (stdlib, --self-test);
+                      build_pdf.sh; pr.sh, uprd.sh, lib/ (from ww3-gpu)
 marola/               MIP-0057 draft + docs/AGENTIC-ARCHITECT-MAPPING.md, upstreamed via marola's
                       mip / mip-tasks skills as stacked PRs; never edit marola from here
-publications/         course book + post-exam writeup; EN source, PT generated in CI
-flake.nix             thin: inputs.nix-config → labs/agentic-architect devShell. No local Nix logic.
-.claude/              settings.json (deny prefixes, attribution off), hooks/guard-gcloud.sh, rules/
+publications/         book/ (pandoc defaults, template, filters) + post-exam writeup; pdf/ on main
+flake.nix · flake.lock  own tools + nix-config labs/{lint,agentic,publisher}; shells default/pubs/lint,
+                      packages.book (mkPdf), checks.smoke. Shared tooling belongs in nix-config.
+.github/              ci.yml, pubs.yml, pr-body.yml, dependabot.yml, PR template
+.claude/ · .ai-jail   settings.json (deny prefixes, attribution off), hooks/guard-gcloud.sh, rules/;
+                      the ai-jail policy (.env masked)
 ```
 
 ## Writing lessons and questions
@@ -120,7 +128,7 @@ flake.nix             thin: inputs.nix-config → labs/agentic-architect devShel
 ## Session discipline
 
 - One deliverable, one session, one branch, one PR — `/clear` and `/rename` to the branch name
-  so usage maps to the PR. Sessions follow `gt.md`'s order; a session that starts writing
+  so usage maps to the PR. Sessions follow the prompt series' order; a session that starts writing
   Prompt 2 content inside Prompt 0 is doing it wrong.
 - Commits carry exactly three trailers: `Tested:`, `Cost:`, `Co-Authored-By: Claude
   <noreply@anthropic.com>`. No session links, no "Generated with" banners, no PR-body attribution

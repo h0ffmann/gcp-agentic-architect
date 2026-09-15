@@ -1,5 +1,7 @@
 """A2A shape: two local agents publish agent cards; an orchestrator fans out in parallel, then sequences."""
-import json, threading, urllib.request
+import json
+import threading
+import urllib.request
 from http.server import BaseHTTPRequestHandler, HTTPServer
 def agent_server(name, skill, handler):
     class H(BaseHTTPRequestHandler):

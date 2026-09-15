@@ -7,7 +7,7 @@ day is multiple-choice preparation. Console time is for recognising products, no
 Daily shape (≈ 8 h): reading block · runnable case · 30-question quiz · 20-min `just quiz --weak`
 review · one line in `STUDY-LOG.md`. No new material after D14.
 
-| Day | Date | Focus | Sessions (gt.md) | Done when |
+| Day | Date | Focus | Sessions ([prompt series](docs/PROMPT-SERIES_202609.md)) | Done when |
 |---|---|---|---|---|
 | D1 | Tue 16 | Orientation, EXAM-BRIEF, toolchain, AWESOME list, question schema + 150 seed | Prompt 5 → 1 → 3 → 2 (outline only) | `just smoke` green; `just quiz --section 3` runs |
 | D2 | Wed 17 | 3.1a — model selection, ADK fundamentals | Prompt 2: lessons 01, 02 | cases 01–02 run |

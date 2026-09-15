@@ -1,0 +1,8 @@
+# ai-jail sandbox policy for this repo (https://github.com/akitaonrails/ai-jail), used by
+# `just jco` / `jcf` / `jcs` through nix-config labs/agentic's jail-run. Committed, untrusted
+# layer: it can only tighten; per-machine trust goes in ~/.ai-jail.
+command = ["claude"]
+rw_maps = ["~/.claude", "~/.claude.json"]
+mask = [".env", ".env.*", "*.pem", "*.key", "*credentials*.json"]
+network = true
+terminal_passthrough = true

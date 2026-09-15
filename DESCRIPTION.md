@@ -1,0 +1,3 @@
+Open exam lab for Google Cloud's Professional Agentic Architect certification (PR000340, beta): a 15-lesson course weighted like the exam guide, 12 runnable agent cases that need no cloud account (ADK shapes, RAG with reranking, MCP, A2A, evalsets, gateway policy), a scenario-style question bank with a spaced-repetition quiz runner, a verified awesome-list, a Nix toolchain from nix-config, gated gcloud hooks for coding agents, and a markdown-to-PDF study book built in CI.
+
+Trademarks: Google Cloud and related product names are trademarks of Google LLC, named here only to refer to those products; this project is independent, not endorsed by Google, and contains no exam question content.

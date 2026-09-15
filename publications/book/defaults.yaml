@@ -1,0 +1,23 @@
+# publications/book/defaults.yaml — pandoc defaults for the study book (shape from h0ffmann/ww3-gpu)
+from: gfm+tex_math_dollars+footnotes+definition_lists+attributes
+to: pdf
+pdf-engine: xelatex
+top-level-division: chapter
+number-sections: true
+toc: true
+toc-depth: 2
+highlight-style: tango
+filters:
+  - publications/book/filters/symbols.lua
+metadata:
+  title: "Professional Agentic Architect"
+  subtitle: "A self-paced study book for Google Cloud PR000340 (beta, 2026-09): custom agents, evaluation, deployment, security, coding agents and low-code"
+  author: "Matheus Hoffmann"
+  date: "2026-09"
+  lang: en-US
+  documentclass: book
+  classoption: [a4paper, 11pt, openany]
+  geometry: margin=2.5cm
+  linkcolor: NavyBlue
+  urlcolor: NavyBlue
+  colorlinks: true

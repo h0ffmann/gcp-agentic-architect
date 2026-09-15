@@ -1,5 +1,6 @@
 """RAG: bag-of-words embeddings → cosine top-k → reranker fixes precision@3."""
-import math, collections
+import math
+import collections
 DOCS = {"d1": "refund policy: refunds within 30 days for damaged items", "d2": "shipping policy: free shipping over 50 euros",
         "d3": "returns: how to return an item and get a refund", "d4": "damaged parcel? contact support with photos for a refund",
         "d5": "loyalty points and refunds on gift cards", "d6": "refund timelines: 5 business days after approval"}

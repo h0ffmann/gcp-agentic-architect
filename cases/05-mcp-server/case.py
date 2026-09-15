@@ -1,5 +1,7 @@
 """MCP shape: JSON-RPC over stdio, tools/list + tools/call, client-side allowlist (a registry)."""
-import json, subprocess, sys
+import json
+import subprocess
+import sys
 SERVER = r'''
 import json, sys
 TOOLS = {"lookup_order": lambda a: {"order": a["id"], "status": "shipped"}, "delete_db": lambda a: {"deleted": True}}
@@ -11,8 +13,9 @@ for line in sys.stdin:
     print(json.dumps({"jsonrpc": "2.0", "id": i, "result": res}), flush=True)
 '''
 p = subprocess.Popen([sys.executable, "-c", SERVER], stdin=subprocess.PIPE, stdout=subprocess.PIPE, text=True)
-def rpc(method, params=None, _c=[0]):
-    _c[0] += 1; p.stdin.write(json.dumps({"jsonrpc": "2.0", "id": _c[0], "method": method, "params": params or {}}) + "\n"); p.stdin.flush()
+ids = iter(range(1, 1_000))
+def rpc(method, params=None):
+    p.stdin.write(json.dumps({"jsonrpc": "2.0", "id": next(ids), "method": method, "params": params or {}}) + "\n"); p.stdin.flush()
     return json.loads(p.stdout.readline())["result"]
 REGISTRY_ALLOW = {"lookup_order"}   # what the registry/gateway lets this agent call
 tools = [t["name"] for t in rpc("tools/list")["tools"]]; print("server offers:", tools)

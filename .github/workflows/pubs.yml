@@ -1,0 +1,27 @@
+# pubs — the study book, built with nix-config's labs/publisher action: book_prep's self-test as
+# pre-build, then nix flake check, nix build (packages.default = the book), artifact upload, and
+# on main a commit of pdf/ back. Pattern from h0ffmann/ww3-gpu.
+name: Publications
+
+on:
+  pull_request:
+    paths: ['course/**', 'publications/**', 'scripts/build_pdf.sh', 'scripts/book_prep.py', 'flake.nix', 'flake.lock', '.github/workflows/pubs.yml']
+  push:
+    branches: [main]
+    paths: ['course/**', 'publications/**', 'scripts/build_pdf.sh', 'scripts/book_prep.py', 'flake.nix', 'flake.lock', '.github/workflows/pubs.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: h0ffmann/nix-config/labs/publisher@main
+        with:
+          pre-build: python3 scripts/book_prep.py --self-test
+          commit: ${{ github.ref == 'refs/heads/main' && github.event_name == 'push' }}

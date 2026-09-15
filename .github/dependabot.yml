@@ -1,0 +1,10 @@
+# Actions only: scripts and cases are stdlib Python, and the Nix inputs move with `just lock`.
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    groups:
+      actions:
+        patterns: ["*"]

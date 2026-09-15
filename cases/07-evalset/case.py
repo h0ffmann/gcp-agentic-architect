@@ -1,5 +1,5 @@
 """ADK-style evalset: expected tool trajectory + reference response; CI exit code on threshold."""
-import json, sys, difflib
+import difflib
 EVALSET = {"eval_set_id": "orders", "eval_cases": [
   {"eval_id": "refund-damaged", "user": "refund order ORD-1, it arrived damaged",
    "expected_tools": ["get_order", "create_refund"], "reference": "Refund created for ORD-1."},

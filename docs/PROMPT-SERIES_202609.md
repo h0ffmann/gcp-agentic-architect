@@ -1,5 +1,9 @@
 # Prompt series — `gcp-agentic-architect` (Google Cloud Professional Agentic Architect, beta)
 
+> Plan of record, formerly `gt.md`. The prompts are kept as written; where the repo outgrew one
+> (Prompt 5's nix-config lab, Prompt 6's publications pipeline), a "Status" note under that
+> prompt says what was actually built.
+
 Not one prompt. Seven sessions, one deliverable each, in the same "one feature, one session"
 discipline marola already enforces (`/clear`, `/rename` to the branch, `just pr`). Prompt 0 is the
 skeleton every later prompt pushes into; Prompts 1–6 are independent enough to run in any order
@@ -32,9 +36,9 @@ after 0, but the order below is the study order.
 ```text
 CONTEXT (identical in every session of this lab)
 
-Who: M. Hoffmann. Unemployed, full-time on this for 15 days, exam on 2026-09-30 (beta window
-closes that day), travelling to the test centre. Failing is not an option; overspend is not an
-option either. Treat me as a senior engineer — no hand-holding, no filler.
+Who: one candidate, full-time on this for 15 days, exam on 2026-09-30 (beta window closes that
+day). Pass on the first attempt without overspending. Treat me as a senior engineer — no
+hand-holding, no filler.
 
 Exam: PR000340, Google Cloud Certified – Professional Agentic Architect (beta, English).
 Official guide: https://services.google.com/fh/files/misc/professional_agentic_architect_exam_guide_english.pdf
@@ -293,6 +297,13 @@ in the lab repo from a clean clone; `just toolchain` prints exact versions (for 
 methods section, as in labs/pratico).
 ```
 
+**Status (2026-09-15).** No `labs/agentic-architect` was added. nix-config's labs became generic
+and reusable (`lint`, `agentic`, `publisher`, `pratico`, `cuda`), and its consumers follow
+marola's shape: the project's own tools (python, uv, gcloud, ollama, node) in the repo's
+`flake.nix`, the shared labs appended as flake inputs — `lint.lib.tools`, `agentic.lib.tools`
+(ai-jail, `jail-run`, gh), and `publisher.lib.mkPdf` for the book. The drop-in under `contrib/`
+was deleted. The flake is locked, so `nix develop` works from a clean clone.
+
 ---
 
 ## Prompt 6 — Publications, zip, first push (D14 evening / D15 morning)
@@ -317,6 +328,12 @@ TASK: package the lab for its first public push and produce the zip.
 Acceptance: zip unpacks, `nix develop -c just smoke` green from the unpacked tree, `git log`
 trailers present, nothing in the zip that the secrets scan flags.
 ```
+
+**Status (2026-09-15).** The book uses ww3-gpu's pipeline as ported: `scripts/book_prep.py` +
+`scripts/build_pdf.sh` + `publications/book/{defaults.yaml,template.tex,filters/}`, built in the
+Nix sandbox by `publisher.lib.mkPdf` (`nix build .#book`), and `.github/workflows/pubs.yml`
+commits `pdf/` back to `main` through the `h0ffmann/nix-config/labs/publisher` action. PT
+generation is still open: ww3-gpu's `translate_md.py` targets its proposal, not a book.
 
 ---
 
