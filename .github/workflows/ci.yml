@@ -20,8 +20,8 @@ jobs:
     name: smoke (layout, banks, self-tests, cases)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
         with: { python-version: "3.12" }
       - run: python3 scripts/smoke.py
       - run: bash .claude/hooks/guard-gcloud.sh --self-test
@@ -31,9 +31,9 @@ jobs:
     name: quality (nix flake check + just quality)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: DeterminateSystems/nix-installer-action@v16
-      - uses: DeterminateSystems/magic-nix-cache-action@v9
+      - uses: actions/checkout@v7
+      - uses: DeterminateSystems/nix-installer-action@v23
+      - uses: DeterminateSystems/magic-nix-cache-action@v15
       # devShells evaluate, checks.smoke builds; the lock must be current.
       - run: nix flake check --no-update-lock-file --print-build-logs
       - run: nix develop .#lint --no-update-lock-file --command just quality
@@ -42,7 +42,7 @@ jobs:
     name: markdown links
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: lycheeverse/lychee-action@v2
         with:
           args: --no-progress --max-concurrency 4 --accept 200,206,403,429 './**/*.md'
