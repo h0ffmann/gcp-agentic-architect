@@ -1,5 +1,4 @@
 """Model selection as a scored decision: constraints → LLM/SLM, hosted/SaaS, OSS/proprietary."""
-import sys
 OPTIONS = {
     "gemini-saas":        dict(residency=0, latency=2, breadth=3, ops=3, cost_small=2),
     "open-slm-self-host": dict(residency=3, latency=3, breadth=1, ops=1, cost_small=3),

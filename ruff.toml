@@ -1,0 +1,8 @@
+# `just quality` and ci.yml. Stdlib scripts and 30–50 line cases; keep the rule set small.
+target-version = "py312"
+line-length = 120
+extend-exclude = [".claude/worktrees", ".tmp", "build"]
+
+[lint]
+select = ["E", "F", "W", "B"]
+ignore = ["E501", "E701", "E702"]  # compact one-line cases are deliberate

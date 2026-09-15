@@ -1,9 +1,23 @@
+# CI on GitHub-hosted runners. No job needs a Google Cloud account, a secret, or network beyond
+# fetching tools: the cases are stdlib, the quiz bank is JSONL, the gcloud guard is a regex test.
 name: ci
+
 on:
-  push: { branches: [main] }
+  push:
+    branches: [main]
   pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
 jobs:
   smoke:
+    name: smoke (layout, banks, self-tests, cases)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -11,19 +25,25 @@ jobs:
         with: { python-version: "3.12" }
       - run: python3 scripts/smoke.py
       - run: bash .claude/hooks/guard-gcloud.sh --self-test
-      - run: for s in scripts/*.py; do python3 "$s" --self-test; done
       - run: for d in cases/*/; do bash "$d/run.sh"; done
-  nix:
+
+  quality:
+    name: quality (nix flake check + just quality)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: DeterminateSystems/nix-installer-action@v16
-      - run: nix flake check --no-build
-  book:
+      - uses: DeterminateSystems/magic-nix-cache-action@v9
+      # devShells evaluate, checks.smoke builds; the lock must be current.
+      - run: nix flake check --no-update-lock-file --print-build-logs
+      - run: nix develop .#lint --no-update-lock-file --command just quality
+
+  links:
+    name: markdown links
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: sudo apt-get update -qq && sudo apt-get install -y -qq pandoc
-      - run: bash publications/build.sh
-      - uses: actions/upload-artifact@v4
-        with: { name: book, path: pdf/ }
+      - uses: lycheeverse/lychee-action@v2
+        with:
+          args: --no-progress --max-concurrency 4 --accept 200,206,403,429 './**/*.md'
+          fail: false

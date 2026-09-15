@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Google Cloud certification support
+    url: https://support.google.com/cloud-certification/
+    about: >-
+      Registration, scheduling, results and exam policy belong to Google's certification
+      support. Open an issue here only for problems with this repo's lessons, cases, questions
+      or scripts — and never post exam question content (NDA).

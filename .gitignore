@@ -2,11 +2,13 @@
 .env
 .env.*
 !.env.example
-pdf/
+build/
 *.zip
 __pycache__/
+.ruff_cache/
 .direnv/
-result
-node_modules/
 .venv/
+result
+result-*
+node_modules/
 questions/cards/bank.tsv
