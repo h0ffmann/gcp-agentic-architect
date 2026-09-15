@@ -119,6 +119,10 @@ flake.nix · flake.lock  own tools + nix-config labs/{lint,agentic,publisher}; s
 - Questions are Google Professional scenario items: a company, a constraint, "what should you
   do?", one best answer, distractors that are real products used wrongly. Every option carries
   a rationale. Tag with the objective id (`1.1` … `5.2`); `quiz.py` fails on unknown ids.
+- A question that only a bank statistic can catch is still a defect: the correct answer must not
+  be the longest or the shortest option, one letter must not dominate the bank, and rationales
+  must explain rather than dismiss. `quiz.py --validate` enforces all three; `--rebalance`
+  redistributes answer letters after a batch. See `questions/schema.md`.
 - "Verified today" tables are the point of a lesson, not decoration: product · what it does ·
   limits/quotas · pricing unit · marker · URL · date.
 - The "marola port" sidebar names a trait, module, or MIP with a file:line, or says "honest gap".

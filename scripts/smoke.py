@@ -42,6 +42,12 @@ def check_banks():
                 continue
             if q.get("section") not in SECTIONS:
                 errors.append(f"{bank.name}:{n}: unknown section {q.get('section')!r}")
+    # quiz.py owns the schema and the quality lint (stems, rationales, answer-letter and
+    # option-length balance); run it here so one command covers the banks.
+    r = subprocess.run([sys.executable, str(ROOT / "scripts" / "quiz.py"), "--validate"],
+                       capture_output=True, text=True, check=False)
+    if r.returncode != 0:
+        errors += [line for line in (r.stdout + r.stderr).splitlines() if line.strip()]
     return errors
 
 
