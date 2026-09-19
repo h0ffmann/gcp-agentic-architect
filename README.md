@@ -45,7 +45,7 @@ Everything before Sept 30 is Part 1. Lab prep is a separate block after results.
 | [`questions/`](questions/) | `bank.jsonl` (316 scenario questions, rationale per option), two built 60-question mocks, Anki decks in `cards/`, [`schema.md`](questions/schema.md) |
 | [`scripts/`](scripts/) | `quiz.py` (Leitner boxes, weighted predicted score), `awesome_digest.py`, `smoke.py`, the book pipeline, `pr.sh` / `uprd.sh` |
 | [`AWESOME-AGENTIC-ARCHITECT_202609.md`](AWESOME-AGENTIC-ARCHITECT_202609.md) | Curated, dated links; every entry fetched |
-| [`EXAM-BRIEF.md`](EXAM-BRIEF.md) · [`STUDY-CALENDAR.md`](STUDY-CALENDAR.md) · [`STUDY-LOG.md`](STUDY-LOG.md) | The guide as a checklist + cost plan · 15 days to the MCQ · one line per day |
+| [`EXAM-BRIEF.md`](EXAM-BRIEF.md) · [`STUDY-CALENDAR.md`](STUDY-CALENDAR.md) · [`STUDY-GUIDE.md`](STUDY-GUIDE.md) · [`STUDY-LOG.md`](STUDY-LOG.md) | The guide as a checklist + cost plan · 15 days to the MCQ · the per-lesson loop and which lessons need notes · one line per day |
 | [`marola/`](marola/) | Draft MIP and exam-to-architecture mapping, upstreamed to marola by its own `mip` skills |
 | [`publications/`](publications/) | The study book (pandoc defaults, template, Lua filter) and the post-exam template; PDFs land in `pdf/` on `main` |
 | [`docs/PROMPT-SERIES_202609.md`](docs/PROMPT-SERIES_202609.md) | The seven-session prompt series that built this repo (plan of record) |

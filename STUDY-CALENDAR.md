@@ -6,6 +6,7 @@ day is multiple-choice preparation. Console time is for recognising products, no
 
 Daily shape (≈ 8 h): reading block · runnable case · 30-question quiz · 20-min `just quiz --weak`
 review · one line in `STUDY-LOG.md`. No new material after D14.
+The per-lesson loop, the catch-up order and which lessons need personal notes: [`STUDY-GUIDE.md`](STUDY-GUIDE.md).
 
 | Day | Date | Focus | Sessions ([prompt series](docs/PROMPT-SERIES_202609.md)) | Done when |
 |---|---|---|---|---|
