@@ -12,3 +12,7 @@ result
 result-*
 node_modules/
 questions/cards/bank.tsv
+# private: past system designs, reviewed locally, never pushed
+past-problems/*
+!past-problems/.gitkeep
+!past-problems/TEMPLATE.md
