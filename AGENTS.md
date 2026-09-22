@@ -100,6 +100,8 @@ course/NN-*.md        lessons; fixed skeleton: On the exam · Read · Verified t
                       marola port · Quiz · Flashcards
 cases/NN-*/           one runnable local case per lesson, one command, one assertion
 questions/            bank.jsonl, mock-N.jsonl, cards/ (Anki TSV), schema.md
+interviews/           NN-*.md system-design questions (Setting · System as found · Constraints ·
+                      Part A/B/C · Related lessons), no answers; answers/ holds your attempts
 scripts/              quiz.py, awesome_digest.py, smoke.py, book_prep.py (stdlib, --self-test);
                       build_pdf.sh; pr.sh, uprd.sh, lib/ (from ww3-gpu)
 marola/               MIP-0057 draft + docs/AGENTIC-ARCHITECT-MAPPING.md, upstreamed via marola's
@@ -108,7 +110,8 @@ publications/         book/ (pandoc defaults, template, filters) + post-exam wri
 flake.nix · flake.lock  own tools + nix-config labs/{lint,agentic,publisher}; shells default/pubs/lint,
                       packages.book (mkPdf), checks.smoke. Shared tooling belongs in nix-config.
 .github/              ci.yml, pubs.yml, pr-body.yml, dependabot.yml, PR template
-.claude/ · .ai-jail   settings.json (deny prefixes, attribution off), hooks/guard-gcloud.sh, rules/;
+.claude/ · .ai-jail   settings.json (deny prefixes, attribution off), hooks/guard-gcloud.sh, rules/,
+                      agents/design-reviewer.md (holds the interview rubrics — never copy them into interviews/);
                       the ai-jail policy (.env masked)
 ```
 
