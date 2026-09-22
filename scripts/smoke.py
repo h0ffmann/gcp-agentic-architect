@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
-"""Repo smoke check: layout present, scripts pass --self-test, question banks parse.
+"""Repo smoke check: layout present, scripts pass --self-test, question banks parse,
+interview questions keep their skeleton and each has a rubric in the design-reviewer agent.
 
 Usage: smoke.py [--json] [--self-test]
 """
 import json
 import pathlib
+import re
 import subprocess
 import sys
 
@@ -16,9 +18,12 @@ REQUIRED = [
     "justfile", "flake.nix", "flake.lock", ".ai-jail", ".github/workflows/ci.yml", ".github/workflows/pubs.yml",
     ".claude/settings.json", ".claude/hooks/guard-gcloud.sh",
     "course", "cases", "questions", "scripts", "marola", "publications/book/defaults.yaml",
+    "interviews/README.md", ".claude/agents/design-reviewer.md",
 ]
 LESSONS = 15
 SECTIONS = {"1.1", "1.2", "2.1", "2.2", "3.1", "3.2", "3.3", "4.1", "4.2", "5.1", "5.2"}
+INTERVIEW_HEADINGS = ["## Setting", "## The system as found", "## Constraints", "## Part A",
+                      "## Part B", "## Part C", "## Related lessons"]
 
 
 def check_layout():
@@ -51,6 +56,26 @@ def check_banks():
     return errors
 
 
+def check_interviews():
+    """Every question has the fixed skeleton and a rubric in the reviewer agent, and vice versa."""
+    errors = []
+    questions = sorted((ROOT / "interviews").glob("[0-9][0-9]-*.md"))
+    agent = (ROOT / ".claude/agents/design-reviewer.md").read_text()
+    rubrics = set(re.findall(r"^## Rubric (\d\d) ", agent, re.M))
+    for q in questions:
+        text = q.read_text()
+        for h in INTERVIEW_HEADINGS:
+            if not re.search(rf"^{re.escape(h)}\b", text, re.M):
+                errors.append(f"interviews/{q.name}: missing '{h}'")
+        if re.search(r"^## (Answer|Solution|Rubric|Hints?)\b", text, re.M | re.I):
+            errors.append(f"interviews/{q.name}: answers do not belong in a question file")
+        if q.name[:2] not in rubrics:
+            errors.append(f"interviews/{q.name}: no '## Rubric {q.name[:2]}' in design-reviewer.md")
+    for nn in sorted(rubrics - {q.name[:2] for q in questions}):
+        errors.append(f"design-reviewer.md: rubric {nn} has no interviews/{nn}-*.md")
+    return errors
+
+
 def check_scripts():
     errors = []
     for s in sorted((ROOT / "scripts").glob("*.py")):
@@ -65,6 +90,7 @@ def check_scripts():
 def self_test():
     assert "3.1" in SECTIONS and "6.1" not in SECTIONS
     assert check_layout() == [], check_layout()
+    assert check_interviews() == [], check_interviews()
     print("smoke self-test ok")
 
 
@@ -72,7 +98,8 @@ def main(argv):
     if "--self-test" in argv:
         self_test()
         return 0
-    report = {"layout": check_layout(), "banks": check_banks(), "scripts": check_scripts()}
+    report = {"layout": check_layout(), "banks": check_banks(), "interviews": check_interviews(),
+              "scripts": check_scripts()}
     ok = not any(report.values())
     if "--json" in argv:
         print(json.dumps({"ok": ok, **report}, indent=2))
