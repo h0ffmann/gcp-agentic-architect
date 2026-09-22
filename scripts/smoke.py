@@ -18,7 +18,7 @@ REQUIRED = [
     "justfile", "flake.nix", "flake.lock", ".ai-jail", ".github/workflows/ci.yml", ".github/workflows/pubs.yml",
     ".claude/settings.json", ".claude/hooks/guard-gcloud.sh",
     "course", "cases", "questions", "scripts", "marola", "publications/book/defaults.yaml",
-    "interviews/README.md", ".claude/agents/design-reviewer.md",
+    "interviews/README.md", ".claude/agents/design-reviewer.md", "past-problems/TEMPLATE.md",
 ]
 LESSONS = 15
 SECTIONS = {"1.1", "1.2", "2.1", "2.2", "3.1", "3.2", "3.3", "4.1", "4.2", "5.1", "5.2"}
@@ -73,6 +73,11 @@ def check_interviews():
             errors.append(f"interviews/{q.name}: no '## Rubric {q.name[:2]}' in design-reviewer.md")
     for nn in sorted(rubrics - {q.name[:2] for q in questions}):
         errors.append(f"design-reviewer.md: rubric {nn} has no interviews/{nn}-*.md")
+    # past-problems/ is private by construction: the ignore rule, not discipline, keeps it off
+    # GitHub. Checked literally so it also holds in the nix sandbox, where there is no .git.
+    ignored = (ROOT / ".gitignore").read_text().splitlines()
+    if "past-problems/*" not in ignored:
+        errors.append(".gitignore: 'past-problems/*' rule missing — private designs would be pushed")
     return errors
 
 

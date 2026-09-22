@@ -39,6 +39,16 @@ Part C · Related lessons**. There is no answer section anywhere in this folder 
    missed. It never writes files.
 4. Redo the gaps in a second file the next day. Compare.
 
+## Your own past designs — `past-problems/`
+
+Interview rounds also ask "tell me about a system you designed". [`past-problems/`](../past-problems/)
+is for those: one file per real project, from [`TEMPLATE.md`](../past-problems/TEMPLATE.md),
+reviewed by the same agent against the seven axes (no rubric; the file's own constraints and its
+"what went wrong afterwards" are the ground truth). The folder is gitignored except the template
+and `.gitkeep`, and `just smoke` fails if that rule is ever removed — so employers, clients and
+incidents may be named there, and nowhere else in this repo. The agent is told never to copy a
+line of it into anything but the review.
+
 ## Sources
 
 Every Part C table is answered from these. Google Cloud names change; the exam and an interviewer

@@ -102,6 +102,8 @@ cases/NN-*/           one runnable local case per lesson, one command, one asser
 questions/            bank.jsonl, mock-N.jsonl, cards/ (Anki TSV), schema.md
 interviews/           NN-*.md system-design questions (Setting · System as found · Constraints ·
                       Part A/B/C · Related lessons), no answers; answers/ holds your attempts
+past-problems/       private, gitignored except TEMPLATE.md and .gitkeep: real past designs for the
+                      reviewer agent; never move its content into a tracked file
 scripts/              quiz.py, awesome_digest.py, smoke.py, book_prep.py (stdlib, --self-test);
                       build_pdf.sh; pr.sh, uprd.sh, lib/ (from ww3-gpu)
 marola/               MIP-0057 draft + docs/AGENTIC-ARCHITECT-MAPPING.md, upstreamed via marola's
